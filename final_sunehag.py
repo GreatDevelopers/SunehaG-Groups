@@ -1,7 +1,7 @@
 import mysql.connector
 import os
 
-cnx = mysql.connector.connect(user='root', password='TccAc/FansOff?', database='sunehag_test')
+cnx = mysql.connector.connect(user='root', password='**', database='sunehag_test')
 course_code = []
 branch = []
 student = []
@@ -183,7 +183,7 @@ print list_branch
 
 
 for i in dic_branch_code:
-    flag=True    
+    flag=True
     for j in dic_branch_code[i]:
         if flag==True:
     	    ccmd2="ejabberdctl create_room "+str(list_branch[i]).replace(' ','_')+ " conference.lab.gdy.club lab.gdy.club"
@@ -224,29 +224,29 @@ for i in list_semester:
             flag=False
 	cmd2="ejabberdctl send_direct_invitation "+str(list_semester[i]).replace(' ','_')+" conference.lab.gdy.club none none "+str(j)+"@lab.gdy.club"
 	os.system(cmd2)
-		
+
 for i in list_ssection:
     flag=True
     for j in dic_ssection[i]:
         if flag==True:
-			ccmd4="ejabberdctl create_room "+str(list_ssection[i]).replace(' ','_')+ " conference.lab.gdy.club lab.gdy.club"
-			os.system(ccmd4)
-			print ccmd4
+            ccmd4="ejabberdctl create_room "+str(list_ssection[i]).replace(' ','_')+ " conference.lab.gdy.club lab.gdy.club"
+            os.system(ccmd4)
+            print ccmd4
             ccmd9="ejabberdctl change_room_option "+str(list_ssection[i]).replace(' ','_')+ " conference.lab.gdy.club allow_subscription true"
             os.system(ccmd9)
             flag=False
-		cmd3="ejabberdctl send_direct_invitation "+str(list_ssection[i]).replace(' ','_')+" conference.lab.gdy.club none none "+str(j)+"@lab.gdy.club"
-		os.system(cmd3)
+        cmd3="ejabberdctl send_direct_invitation "+str(list_ssection[i]).replace(' ','_')+" conference.lab.gdy.club none none "+str(j)+"@lab.gdy.club"
+        os.system(cmd3)
 
 for i in list_sgroup:
 	flag=True
 	for j in dic_sgroup[i]:
-		if flag==True:
-			ccmd5="ejabberdctl create_room "+str(list_sgroup[i]).replace(' ','_')+ " conference.lab.gdy.club lab.gdy.club"
-			os.system(ccmd5)
-            ccmd10="ejabberdctl change_room_option "+str(list_sgroup[i]).replace(' ','_')+ " conference.lab.gdy.club allow_subscription true"
-            os.system(ccmd10)
-			flag=False
-			print ccmd5
-		cmd4="ejabberdctl send_direct_invitation "+str(list_sgroup[i]).replace(' ','_')+" conference.lab.gdy.club none none "+str(j)+"@lab.gdy.club"
-		os.system(cmd4)
+            if flag==True:
+                ccmd5="ejabberdctl create_room "+str(list_sgroup[i]).replace(' ','_')+ " conference.lab.gdy.club lab.gdy.club"
+                os.system(ccmd5)
+                ccmd10="ejabberdctl change_room_option "+str(list_sgroup[i]).replace(' ','_')+ " conference.lab.gdy.club allow_subscription true"
+                os.system(ccmd10)
+                flag=False
+                print ccmd5
+            cmd4="ejabberdctl send_direct_invitation "+str(list_sgroup[i]).replace(' ','_')+" conference.lab.gdy.club none none "+str(j)+"@lab.gdy.club"
+            os.system(cmd4)
