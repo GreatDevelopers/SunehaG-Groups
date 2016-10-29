@@ -159,14 +159,16 @@ for i in cursor11:
 print course_name
 
 print dic_course_code[1]
-#for i,j in zip(course_code, course_name):
-#    z = 0
-#    ccmd="ejabberdctl create_room "+str(j)+ " conference.lab.gdy.club lab.gdy.club"
-#    os.system(ccmd)
-#    for z in dic_course_code[i]:
-#        cmd="ejabberdctl send_direct_invitation "+str(j)+ " conference.lab.gdy.club none none "+str(z)+"@lab.gdy.club"
-#        os.system(cmd)
-#
+for i,j in zip(course_code, course_name):
+    z = 0
+    ccmd="ejabberdctl create_room "+str(j)+ " conference.lab.gdy.club lab.gdy.club"
+    os.system(ccmd)
+    ccmd6="ejabberdctl change_room_option "+str(j)+ " conference.lab.gdy.club allow_subscription true"
+    os.system(ccmd6)
+    for z in dic_course_code[i]:
+        cmd="ejabberdctl send_direct_invitation "+str(j)+ " conference.lab.gdy.club none none "+str(z)+"@lab.gdy.club"
+        os.system(cmd)
+
 
 cursor12 = cnx.cursor()
 query12 = ("select branch_code, branch_name, course_code from branch_code;")
@@ -181,13 +183,18 @@ print list_branch
 
 
 for i in dic_branch_code:
-    ccmd2="ejabberdctl create_room "+str(list_branch[i]).replace(' ','_')+ " conference.lab.gdy.club lab.gdy.club"
-    print ccmd2
-    #os.system(ccmd2)
-    #for j in dic_branch_code[i]:
-    #    cmd1="ejabberdctl send_direct_invitation "+str(list_branch[i]).replace(' ','_') + " conference.lab.gdy.club none none "+str(j)+"@lab.gdy.club"
-        #os.system(cmd1)
-"""
+    flag=True    
+    for j in dic_branch_code[i]:
+        if flag==True:
+    	    ccmd2="ejabberdctl create_room "+str(list_branch[i]).replace(' ','_')+ " conference.lab.gdy.club lab.gdy.club"
+            print ccmd2
+            os.system(ccmd2)
+            ccmd7="ejabberdctl change_room_option "+str(list_branch[i]).replace(' ','_')+ " conference.lab.gdy.club allow_subscription true"
+            os.system(ccmd7)
+            flag=False
+	cmd1="ejabberdctl send_direct_invitation "+str(list_branch[i]).replace(' ','_') + " conference.lab.gdy.club none none "+str(j)+"@lab.gdy.club"
+	os.system(cmd1)
+
 cursor13 = cnx.cursor()
 query13 = ("select course_code, branch_code, semester, ssection, sgroup from student_data;")
 cursor13.execute(query13)
@@ -206,23 +213,40 @@ print list_ssection
 print list_sgroup
 
 for i in list_semester:
-    ccmd3="ejabberdctl create_room "+str(list_semester[i]).replace(' ','_')+ " conference.lab.gdy.club lab.gdy.club"
-    os.system(ccmd3)
+    flag=True
     for j in dic_semester[i]:
-        cmd2="ejabberdctl send_direct_invitation "+str(list_semester[i]).replace(' ','_')+" conference.lab.gdy.club none none "+str(j)+"@lab.gdy.club"
-        os.system(cmd2)
-
+    	if flag==True:
+            ccmd3="ejabberdctl create_room "+str(list_semester[i]).replace(' ','_')+ " conference.lab.gdy.club lab.gdy.club"
+            os.system(ccmd3)
+            print ccmd3
+            ccmd8="ejabberdctl change_room_option "+str(list_semester[i]).replace(' ','_')+ " conference.lab.gdy.club allow_subscription true"
+            os.system(ccmd8)
+            flag=False
+	cmd2="ejabberdctl send_direct_invitation "+str(list_semester[i]).replace(' ','_')+" conference.lab.gdy.club none none "+str(j)+"@lab.gdy.club"
+	os.system(cmd2)
+		
 for i in list_ssection:
-    ccmd4="ejabberdctl create_room "+str(list_ssection[i]).replace(' ','_')+ " conference.lab.gdy.club lab.gdy.club"
-    os.system(ccmd4)
+    flag=True
     for j in dic_ssection[i]:
-        cmd3="ejabberdctl send_direct_invitation "+str(list_ssection[i]).replace(' ','_')+" conference.lab.gdy.club none none "+str(j)+"@lab.gdy.club"
-        os.system(cmd3)
+        if flag==True:
+			ccmd4="ejabberdctl create_room "+str(list_ssection[i]).replace(' ','_')+ " conference.lab.gdy.club lab.gdy.club"
+			os.system(ccmd4)
+			print ccmd4
+            ccmd9="ejabberdctl change_room_option "+str(list_ssection[i]).replace(' ','_')+ " conference.lab.gdy.club allow_subscription true"
+            os.system(ccmd9)
+            flag=False
+		cmd3="ejabberdctl send_direct_invitation "+str(list_ssection[i]).replace(' ','_')+" conference.lab.gdy.club none none "+str(j)+"@lab.gdy.club"
+		os.system(cmd3)
 
 for i in list_sgroup:
-    ccmd5="ejabberdctl create_room "+str(list_sgroup[i]).replace(' ','_')+ " conference.lab.gdy.club lab.gdy.club"
-    os.system(ccmd5)
-    for j in dic_sgroup[i]:
-        cmd4="ejabberdctl send_direct_invitation "+str(list_sgroup[i]).replace(' ','_')+" conference.lab.gdy.club none none "+str(j)+"@lab.gdy.club"
-        os.system(cmd4)
-"""
+	flag=True
+	for j in dic_sgroup[i]:
+		if flag==True:
+			ccmd5="ejabberdctl create_room "+str(list_sgroup[i]).replace(' ','_')+ " conference.lab.gdy.club lab.gdy.club"
+			os.system(ccmd5)
+            ccmd10="ejabberdctl change_room_option "+str(list_sgroup[i]).replace(' ','_')+ " conference.lab.gdy.club allow_subscription true"
+            os.system(ccmd10)
+			flag=False
+			print ccmd5
+		cmd4="ejabberdctl send_direct_invitation "+str(list_sgroup[i]).replace(' ','_')+" conference.lab.gdy.club none none "+str(j)+"@lab.gdy.club"
+		os.system(cmd4)
