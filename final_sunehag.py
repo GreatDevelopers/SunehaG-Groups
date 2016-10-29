@@ -1,7 +1,7 @@
 import mysql.connector
 import os
 
-cnx = mysql.connector.connect(user='root', password='a', database='suneha_test')
+cnx = mysql.connector.connect(user='root', password='TccAc/FansOff?', database='sunehag_test')
 course_code = []
 branch = []
 student = []
@@ -159,12 +159,14 @@ for i in cursor11:
 print course_name
 
 print dic_course_code[1]
-for i,j in zip(course_code, course_name):
-    z = 0
-    for z in dic_course_code[i]:
-        cmd="ejabberdctl send_direct_invitation "+str(j)+ " conference.guru.gndec.ac.in none none "+str(z)+"@guru.gndec.ac.in"
-        os.system(cmd)
-
+#for i,j in zip(course_code, course_name):
+#    z = 0
+#    ccmd="ejabberdctl create_room "+str(j)+ " conference.lab.gdy.club lab.gdy.club"
+#    os.system(ccmd)
+#    for z in dic_course_code[i]:
+#        cmd="ejabberdctl send_direct_invitation "+str(j)+ " conference.lab.gdy.club none none "+str(z)+"@lab.gdy.club"
+#        os.system(cmd)
+#
 
 cursor12 = cnx.cursor()
 query12 = ("select branch_code, branch_name, course_code from branch_code;")
@@ -179,10 +181,13 @@ print list_branch
 
 
 for i in dic_branch_code:
-    for j in dic_branch_code[i]:
-        cmd1="ejabberdctl send_direct_invitation "+str(list_branch[i]).replace(' ','_') + " conference.guru.gndec.ac.in none none "+str(j)+"@guru.gndec.ac.in"
-        os.system(cmd1)
-
+    ccmd2="ejabberdctl create_room "+str(list_branch[i]).replace(' ','_')+ " conference.lab.gdy.club lab.gdy.club"
+    print ccmd2
+    #os.system(ccmd2)
+    #for j in dic_branch_code[i]:
+    #    cmd1="ejabberdctl send_direct_invitation "+str(list_branch[i]).replace(' ','_') + " conference.lab.gdy.club none none "+str(j)+"@lab.gdy.club"
+        #os.system(cmd1)
+"""
 cursor13 = cnx.cursor()
 query13 = ("select course_code, branch_code, semester, ssection, sgroup from student_data;")
 cursor13.execute(query13)
@@ -201,16 +206,23 @@ print list_ssection
 print list_sgroup
 
 for i in list_semester:
+    ccmd3="ejabberdctl create_room "+str(list_semester[i]).replace(' ','_')+ " conference.lab.gdy.club lab.gdy.club"
+    os.system(ccmd3)
     for j in dic_semester[i]:
-        cmd2="ejabberdctl send_direct_invitation "+str(list_semester[i]).replace(' ','_')+" conference.guru.gndec.ac.in none none "+str(j)+"@guru.gndec.ac.in"
+        cmd2="ejabberdctl send_direct_invitation "+str(list_semester[i]).replace(' ','_')+" conference.lab.gdy.club none none "+str(j)+"@lab.gdy.club"
         os.system(cmd2)
 
 for i in list_ssection:
+    ccmd4="ejabberdctl create_room "+str(list_ssection[i]).replace(' ','_')+ " conference.lab.gdy.club lab.gdy.club"
+    os.system(ccmd4)
     for j in dic_ssection[i]:
-        cmd3="ejabberdctl send_direct_invitation "+str(list_ssection[i]).replace(' ','_')+" conference.guru.gndec.ac.in none none "+str(j)+"@guru.gndec.ac.in"
+        cmd3="ejabberdctl send_direct_invitation "+str(list_ssection[i]).replace(' ','_')+" conference.lab.gdy.club none none "+str(j)+"@lab.gdy.club"
         os.system(cmd3)
 
 for i in list_sgroup:
+    ccmd5="ejabberdctl create_room "+str(list_sgroup[i]).replace(' ','_')+ " conference.lab.gdy.club lab.gdy.club"
+    os.system(ccmd5)
     for j in dic_sgroup[i]:
-        cmd4="ejabberdctl send_direct_invitation "+str(list_sgroup[i]).replace(' ','_')+" conference.guru.gndec.ac.in none none "+str(j)+"@guru.gndec.ac.in"
+        cmd4="ejabberdctl send_direct_invitation "+str(list_sgroup[i]).replace(' ','_')+" conference.lab.gdy.club none none "+str(j)+"@lab.gdy.club"
         os.system(cmd4)
+"""
