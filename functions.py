@@ -18,7 +18,6 @@ def addbookmark(username,groups):
 
 
 def send_invite(username,groups):
-    groups.append('GNDEC')
     for group in groups:
         group = group.replace('/','_')
         group = group.replace(' ','_')
@@ -29,7 +28,6 @@ def send_invite(username,groups):
 
 check_group = []
 def create_group(groups):
-    groups.append('GNDEC')
     for group in groups:
         group = group.replace('/','_')
         group = group.replace(' ','_')

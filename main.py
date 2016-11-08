@@ -2,7 +2,8 @@ from functions import *
 from sqlalchemy import * # don't use * in production
 # if you are using Mysql look for commented code
 
-engine = create_engine('mysql://root:a@localhost/suneha_test')
+#engine = create_engine('mysql://root:a@localhost/suneha_test')
+engine = create_engine('mysql://<username>:<password>@<host>/<database name>')
 
 course_shortform = {'B.Tech.':'BT', 'M.Tech.':'MT', 'MBA':'MBA', 'MCA':'MCA'}
 
@@ -19,47 +20,42 @@ branch_shortform = {'Civil Engineering':'CE', 'Computer Science and Engineering'
         'Energy Engineering':'EngE', 'Geo Technical Engineering ':'GEO',\
         'Soil Mechanics and Foundation Engineering':'SMFE'}
 
-metadata = MetaData(engine)
-table1 = Table('course_code', metadata, autoload=True)
-table2 = Table('branch_code', metadata, autoload=Trues
-table3 = Table('student_data', metadata, autoload=True)
-
 #course_code
-var1 = table1.select(table1.c.course_code)
+connection = engine.connect()
+course_query = text('select course_code, course_name from course_code')
 
 #branch_code
-var2 = table2.select(table2.c.course_code)
+branch_query = text('select branch_code, branch_name, course_code from branch_code')
 
 #student_data
-var3 = table3.select(table3.c.course_code)
+student_query = text('select course_code, branch_code, ssection, sgroup, batch, college_roll_no from student_info')
 
-#list-comphrehension
-
-#[(create_group([str(course_shortform[course_code[1]]),(str(course_shortform[course_code[1]])+"_"+str(branch_shortform[branch_code[1]])), (str(course_shortform[course_code[1]])+"_"+str(branch_shortform[branch_code[1]])+"_"+str(student_data[5])), (str(course_shortform[course_code[1]])+"_"+str(branch_shortform[branch_code[1]])+"_"+str(student_data[5])+"_"+str(student_data[9])), (str(course_shortform[course_code[1]])+"_"+str(branch_shortform[branch_code[1]])+"_"+str(student_data[5])+"_"+str(student_data[9])+"_"+str(student_data[10]))]), send_invite(str(student_data[7]),[(str(course_shortform[course_code[1]])+"_"+str(branch_shortform[branch_code[1]])), (str(course_shortform[course_code[1]])+"_"+str(branch_shortform[branch_code[1]])+"_"+str(student_data[5])), (str(course_shortform[course_code[1]])+"_"+str(branch_shortform[branch_code[1]])+"_"+str(student_data[5])+"_"+str(student_data[9])), (str(course_shortform[course_code[1]])+"_"+str(branch_shortform[branch_code[1]])+"_"+str(student_data[5])+"_"+str(student_data[9])+"_"+str(student_data[10]))])) for student_data in var3.execute() for branch_code in var2.execute() if str(student_data[1]) in str(branch_code[2]) and str(student_data[2]) in str(branch_code[0]) for course_code in var1.execute() if str(student_data[1]) in course_code[0]]
-
-
-#student_data[1]: course_code
+#student_data[0]: course_code
 #branch_code[2]: course_code
-#student_data[2]: branch_code
+#student_data[1]: branch_code
 #branch_code[0]: branch_code
 #course_code[1]: course_name
 #course_code[0]: course_code
 #branch_code[1]: branch_name
-#student_data[5]: batch_year
-#student_data[9]: ssection
-#student_data[7]: college_roll_no
-#student_data[10]: sgroup
+#student_data[4]: batch_year
+#student_data[2]: ssection
+#student_data[5]: college_roll_no
+#student_data[3]: sgroup
 
-for student_data in var3.execute():
-   for branch_code in var2.execute():
-        if str(student_data[1]) in str(branch_code[2]) and str(student_data[2]) in str(branch_code[0]):
-            for course_code in var1.execute():
-                if str(student_data[1]) in course_code[0]:
+create_group(['GNDEC'])
+for student_data in connection.execute(student_query):
+   for branch_code in connection.execute(branch_query):
+       if str(student_data[0]) in str(branch_code[2]) and str(student_data[1]) in str(branch_code[0]):
+           for course_code in connection.execute(course_query):
+               if str(student_data[0]) in str(course_code[0]):
                     course = str(course_shortform[course_code[1]])
                     branch = str(course_shortform[course_code[1]])+"_"+str(branch_shortform[branch_code[1]])
-                    passing_year = str(course_shortform[course_code[1]])+"_"+str(branch_shortform[branch_code[1]])+"_"+str(student_data[5])
-                    section = str(course_shortform[course_code[1]])+"_"+str(branch_shortform[branch_code[1]])+"_"+str(student_data[5])+"_"+str(student_data[9])
-                    group = str(course_shortform[course_code[1]])+"_"+str(branch_shortform[branch_code[1]])+"_"+str(student_data[5])+"_"+str(student_data[9])+"_"+str(student_data[10])
+                    passing_year = str(course_shortform[course_code[1]])+"_"+str(branch_shortform[branch_code[1]])+"_"+str(student_data[4])
+                    section = str(course_shortform[course_code[1]])+"_"+str(branch_shortform[branch_code[1]])+"_"+str(student_data[4])+"_"+str(student_data[2]).replace('/','')
+                    group = str(course_shortform[course_code[1]])+"_"+str(branch_shortform[branch_code[1]])+"_"+str(student_data[4])+"_"+str(student_data[2]).replace('/','')+"_"+str(student_data[3])
+                    print course, branch, passing_year, section, group
                     create_group([course, branch, passing_year, section, group])
-                    send_invite(str(student_data[7]),[course, branch, passing_year, section, group])
-                    print student_data[7]
+                    send_invite(str(student_data[5]),[course, branch, passing_year, section, group])
+   #create_group(['GNDEC'])
+   send_invite(str(student_data[5], ['GNDEC']))
+   print student_data[5]
