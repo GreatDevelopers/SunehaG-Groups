@@ -22,6 +22,8 @@ def send_invite(username,groups):
         group = group.replace('/','_')
         group = group.replace(' ','_')
         print group
+        cmd="ejabberdctl set_room_affiliation "+group+" conference."+hostName+" "+username+"@"+hostName+" member"
+        os.system(cmd)
         cmd="ejabberdctl send_direct_invitation "+group+" conference."+hostName+" none none "+username+"@"+hostName
         os.system(cmd)
     addbookmark(username,groups)
@@ -40,5 +42,7 @@ def create_group(groups):
             cmd="ejabberdctl change_room_option "+group+" conference."+hostName+" persistent true"
             os.system(cmd)
             cmd="ejabberdctl change_room_option "+group+" conference."+hostName+" max_users 5000"
+            os.system(cmd)
+            cmd="ejabberdctl change_room_option "+group+" conference."+hostName+" members_only true"
             os.system(cmd)
             print "check group is working ", group
