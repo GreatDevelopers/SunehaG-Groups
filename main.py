@@ -29,7 +29,7 @@ course_query = text('select course_code, course_name from course_code')
 branch_query = text('select branch_code, branch_name, course_code from branch_code')
 
 #student_data
-student_query = text('select course_code, branch_code, ssection, sgroup, batch, college_roll_no from student_info where branch_code=21 and batch=2014')
+student_query = text('select course_code, branch_code, ssection, sgroup, batch, college_roll_no from student_info')
 
 #student_data[0]: course_code
 #branch_code[2]: course_code
