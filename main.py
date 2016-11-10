@@ -1,9 +1,10 @@
+import os
 from functions import *
 from sqlalchemy import * # don't use * in production
 # if you are using Mysql look for commented code
 
 #engine = create_engine('mysql://root:a@localhost/suneha_test')
-#engine = create_engine('mysql://<username>:<password>@<host>/<database name>')
+engine = create_engine('mysql://<username>:<password>@<host>/<database name>')
 
 course_shortform = {'B.Tech.':'BT', 'M.Tech.':'MT', 'MBA':'MBA', 'MCA':'MCA'}
 
@@ -28,7 +29,7 @@ course_query = text('select course_code, course_name from course_code')
 branch_query = text('select branch_code, branch_name, course_code from branch_code')
 
 #student_data
-student_query = text('select course_code, branch_code, ssection, sgroup, batch, college_roll_no from student_info')
+student_query = text('select course_code, branch_code, ssection, sgroup, batch, college_roll_no from student_info where branch_code=21 and batch=2014')
 
 #student_data[0]: course_code
 #branch_code[2]: course_code
@@ -56,5 +57,5 @@ for student_data in connection.execute(student_query):
                     print course, branch, passing_year, section, group
                     create_group([course, branch, passing_year, section, group])
                     send_invite(str(student_data[5]),[course, branch, passing_year, section, group])
-   send_invite(str(student_data[5], ['GNDEC']))
+   send_invite(str(student_data[5]), ['GNDEC'])
    print student_data[5]
