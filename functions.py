@@ -19,6 +19,8 @@ def addbookmark(username,groups):
 
 
 def send_invite(username,groups):
+    username = username.replace('/','_')
+    username = username.replace(' ','_')
     for group in groups:
         group = group.replace('/','_')
         group = group.replace(' ','_')
