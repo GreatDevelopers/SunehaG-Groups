@@ -2,7 +2,7 @@ import os
 import xml.etree.ElementTree as ET
 import subprocess
 
-hostName="guru.gndec.ac.in"
+hostName="localhost"
 
 def addbookmark(username,groups):
     xml = subprocess.Popen(["ejabberdctl","private_get",username,hostName,"storage","storage:bookmarks"], stdout=subprocess.PIPE).stdout.read()
@@ -10,8 +10,8 @@ def addbookmark(username,groups):
     ET.register_namespace("","storage:bookmarks")
     root = ET.fromstring(xml)
     for group in groups:
-        group = group.replace('/','_')
-        group = group.replace(' ','_')
+        group = group.replace('/','-')
+        group = group.replace(' ','-')
         ET.SubElement(root,"conference",attrib={'jid':group+"@conference."+hostName,'autojoin':'true'})
     output=ET.tostring(root)
     print(output)
@@ -22,8 +22,8 @@ def send_invite(username,groups):
     username = username.replace('/','_')
     username = username.replace(' ','_')
     for group in groups:
-        group = group.replace('/','_')
-        group = group.replace(' ','_')
+        group = group.replace('/','-')
+        group = group.replace(' ','-')
         print group
         cmd="ejabberdctl set_room_affiliation "+group+" conference."+hostName+" "+username+"@"+hostName+" member"
         os.system(cmd)
@@ -34,8 +34,8 @@ def send_invite(username,groups):
 check_group = []
 def create_group(groups):
     for group in groups:
-        group = group.replace('/','_')
-        group = group.replace(' ','_')
+        group = group.replace('/','-')
+        group = group.replace(' ','-')
         if group not in check_group:
             check_group.append(group)
             cmd="ejabberdctl create_room "+group+" conference."+hostName+" "+hostName

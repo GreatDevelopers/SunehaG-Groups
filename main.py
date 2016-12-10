@@ -6,6 +6,9 @@ from sqlalchemy import * # don't use * in production
 #engine = create_engine('mysql://root:a@localhost/suneha_test')
 engine = create_engine('mysql://<username>:<password>@<host>/<database name>')
 
+#FIX: Replace with the hostName here
+hostName="HostName"
+
 course_shortform = {'B.Tech.':'BT', 'M.Tech.':'MT', 'MBA':'MBA', 'MCA':'MCA'}
 
 #space FIXME
@@ -50,12 +53,11 @@ for student_data in connection.execute(student_query):
            for course_code in connection.execute(course_query):
                if str(student_data[0]) in str(course_code[0]):
                     course = str(course_shortform[course_code[1]])
-                    branch = str(course_shortform[course_code[1]])+"_"+str(branch_shortform[branch_code[1]])
+                    branch = str(course_shortform[course_code[1]])+"-"+str(branch_shortform[branch_code[1]])
                     passing_year = str(course_shortform[course_code[1]])+"_"+str(branch_shortform[branch_code[1]])+str(student_data[4])[-2:]
-                    section = str(course_shortform[course_code[1]])+"_"+str(branch_shortform[branch_code[1]])+str(student_data[4])[-2:]+"_"+str(student_data[2]).replace('/','')
-                    group = str(course_shortform[course_code[1]])+"_"+str(branch_shortform[branch_code[1]])+str(student_data[4])[-2:]+"_"+str(student_data[2]).replace('/','')+"_"+str(student_data[3])
+                    section = str(course_shortform[course_code[1]])+"-"+str(branch_shortform[branch_code[1]])+str(student_data[4])[-2:]+"-"+str(student_data[2]).replace('/','')
+                    group = str(course_shortform[course_code[1]])+"-"+str(branch_shortform[branch_code[1]])+str(student_data[4])[-2:]+"-"+str(student_data[2]).replace('/','')+"-"+str(student_data[3])
                     print course, branch, passing_year, section, group
                     create_group([course, branch, passing_year, section, group])
-                    send_invite(str(student_data[5]),[course, branch, passing_year, section, group])
-   send_invite(str(student_data[5]), ['GNDEC'])
+                    send_invite(str(student_data[5]),[course, branch, passing_year, section, group, 'GNDEC'])
    print student_data[5]
