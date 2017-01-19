@@ -46,7 +46,7 @@ student_query = text('select course_code, branch_code, ssection, sgroup, batch, 
 #student_data[5]: college_roll_no
 #student_data[3]: sgroup
 
-sunehag.create_group(['GNDEC'])
+sunehag.create_group(['gndec'])
 
 for student_data in connection.execute(student_query):
 	for branch_code in connection.execute(branch_query):
@@ -70,8 +70,8 @@ for student_data in connection.execute(student_query):
 					"-"+str(student_data[2]).replace('/','')+"-"+str(student_data[3])
 
 					print course, branch, passing_year, section, group 
-					sunehag.create_group([course, branch, passing_year, section, group])
+					sunehag.create_group([course.lower(), branch.lower(), passing_year.lower(), section.lower(), group.lower()])
 					sunehag.send_invite(str(student_data[5]), \
-					[course, branch, passing_year, section, group, 'GNDEC'])
+					[course.lower(), branch.lower(), passing_year.lower(), section.lower(), group.lower(), 'gndec'])
 
 	print student_data[5]
