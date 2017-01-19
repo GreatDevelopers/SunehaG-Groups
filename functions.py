@@ -8,8 +8,8 @@ class sunehaG():
 		self.hostName=name
 
 	def addbookmark(self,username,groups):
-		xml = subprocess.Popen(["ejabberdctl","private_get",username,
-		self.hostName,"storage","storage:bookmarks"], 
+		xml = subprocess.Popen(["ejabberdctl","private_get",username, \
+		self.hostName,"storage","storage:bookmarks"], \
 		stdout=subprocess.PIPE).stdout.read()
 
 		print xml
@@ -18,7 +18,7 @@ class sunehaG():
 		for group in groups:
 			group = group.replace('/','-')
 			group = group.replace(' ','-')
-			ET.SubElement(root,"conference",attrib={'jid':group+"@conference."+
+			ET.SubElement(root,"conference",attrib={'jid':group+"@conference."+ \
 			self.hostName,'autojoin':'true'})
 
 		output=ET.tostring(root)
@@ -33,10 +33,10 @@ class sunehaG():
 			group = group.replace('/','-')
 			group = group.replace(' ','-')
 			print group
-			cmd="ejabberdctl set_room_affiliation "+group+" conference."+
-			self.hostName+" "+username+"@"+self.hostName+" member"
+			cmd="ejabberdctl set_room_affiliation "+group+" conference."+ \
+			self.hostName+" "+username+"@"+self.hostName+" member" 
 			os.system(cmd)
-			cmd="ejabberdctl send_direct_invitation "+group+" conference."+
+			cmd="ejabberdctl send_direct_invitation "+group+" conference."+ \
 			self.hostName+" none none "+username+"@"+self.hostName
 			os.system(cmd)
 		self.addbookmark(username,groups)
@@ -48,23 +48,23 @@ class sunehaG():
 			group = group.replace(' ','-')
 			if group not in self.check_group:
 				self.check_group.append(group)
-				cmd="ejabberdctl create_room "+group+" conference."+
+				cmd="ejabberdctl create_room "+group+" conference."+ \
 				self.hostName+" "+self.hostName
 				os.system(cmd)
 
-				cmd="ejabberdctl change_room_option "+group+
+				cmd="ejabberdctl change_room_option "+group+ \
 				" conference."+self.hostName+" allow_subscription true"
 
 				os.system(cmd)
-				cmd="ejabberdctl change_room_option "+group+
+				cmd="ejabberdctl change_room_option "+group+ \
 				" conference."+self.hostName+" persistent true"
 				os.system(cmd)
 
-				cmd="ejabberdctl change_room_option "+group+
+				cmd="ejabberdctl change_room_option "+group+ \
 				" conference."+self.hostName+" max_users 5000"
 				os.system(cmd)
 
-				cmd="ejabberdctl change_room_option "+group+
+				cmd="ejabberdctl change_room_option "+group+ \
 				" conference."+self.hostName+" members_only true"
 				os.system(cmd)
 
